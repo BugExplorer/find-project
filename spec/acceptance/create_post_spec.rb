@@ -6,13 +6,10 @@ feature 'Create post', %q{
   I want to be able to create post
 } do
 
-  scenario 'Authenticated user creates the post' do
-    User.create!(email: 'user@user.com', password: '12345678')
+  given(:user) { create(:user) }
 
-    visit new_user_session_path
-    fill_in 'Email', with: 'user@user.com'
-    fill_in 'Password', with: '12345678'
-    click_on 'Log in'
+  scenario 'Authenticated user creates the post' do
+    sign_in(user)
 
     visit '/posts'
     click_on 'Create post'

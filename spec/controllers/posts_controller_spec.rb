@@ -30,6 +30,8 @@ RSpec.describe PostsController, type: :controller do
   end
 
   describe 'GET #new' do
+    login_user
+
     before { get :new }
 
     it 'assigns a new Post to the @post' do
@@ -54,6 +56,8 @@ RSpec.describe PostsController, type: :controller do
   end
 
   describe 'POST #create' do
+    login_user
+    
     context 'with valid attributes' do
       it 'saves a new post in the database' do
         expect { post :create, post: attributes_for(:post) }

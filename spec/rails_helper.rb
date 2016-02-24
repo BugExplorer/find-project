@@ -5,6 +5,8 @@ require File.expand_path('../../config/environment', __FILE__)
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'spec_helper'
 require 'rspec/rails'
+require 'support/controller_macros'
+require 'support/acceptance_macros'
 
 ActiveRecord::Migration.maintain_test_schema!
 
@@ -18,13 +20,13 @@ end
 
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
+  config.include Devise::TestHelpers, type: :controller
 
-  # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
+  config.include AcceptanceMacros, type: :feature
+  config.extend ControllerMacros, type: :controller
+
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
-
   config.use_transactional_fixtures = true
-
   config.infer_spec_type_from_file_location!
-
   config.filter_rails_from_backtrace!
 end
